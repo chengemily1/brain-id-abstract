@@ -1,6 +1,6 @@
 # Abstraction Induces the Brain Alignment of Language and Speech Models
 
-** Under construction **
+** Under construction 7/25/2026**
 
 This repo contains code for the ICML 2026 paper "Abstraction Induces the Brain Alignment of Language and Speech Models" by Emily Cheng, Aditya Vaidya, and Richard Antonello. 
 
@@ -15,7 +15,6 @@ year={2026},
 url={https://openreview.net/forum?id=n5Ds4qbtjM}
 }
 ```
-
 
 ## Step 1: Downloading the data
 Data were derived from the following open-source datasets:
@@ -40,7 +39,16 @@ To compute the layerwise intrinsic dimension on the last-token representation, u
 For further reference on how to compute ID using GRIDE, see `https://github.com/chengemily1/id-llm-abstraction`.
 
 ## Step 3: Probing
+(TODO Emily)
 
-## Step 4: 
+## Step 4: Encoding models
+(TODO Emily+RJ)
+
+## Step 5: Random Fourier Features ablation
+(RJ)
+
+## Step 6: Braintuning on WavLM
+(Aditya)
+
 
 
