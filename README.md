@@ -45,7 +45,24 @@ For further reference on how to compute ID using GRIDE, see `https://github.com/
 (TODO Emily+RJ)
 
 ## Step 5: Random Fourier Features ablation
-(RJ)
+This is a control analysis. Instead of an LLM, each word is mapped to a fixed random vector and pushed through a Gaussian random Fourier feature map. Sweeping the RFF output dimensionality varies the intrinsic dimension of the feature space without introducing any semantic abstraction, which lets us ask whether encoding performance tracks ID on its own.
+
+All three stages live in `scripts/rff_ablation/rff_ablation.py`, which needs `pip install random-fourier-features-pytorch dadapy`.
+
+The encoding models reuse the setup from the encoding model scaling laws repo, `https://github.com/HuthLab/encoding-model-scaling-laws`:
+- Put its `ridge_utils/` on your `PYTHONPATH`.
+- Download `grids_huge.jbl`, `trfiles_huge.jbl`, and the per-subject `UTS0*_responses.jbl` fMRI responses from the Box folder linked in its README, https://utexas.box.com/v/EncodingModelScalingLaws. These response files are already trimmed by 10 TRs at the start and 5 at the end, and the stimulus is sliced to match.
+
+1. Run the `sweep` stage to fit voxelwise ridge encoding models across a sweep of RFF dimensionalities. It also saves the feature maps, so the next step measures the ID of exactly the maps that were fit.
+    - Example usage: `python3 scripts/rff_ablation/rff_ablation.py sweep --subject UTS02`
+    - Writes `UTS02_RFF_sweep_results_plus_featuremap.jbl`.
+2. Run the `id` stage to compute the GRIDE intrinsic dimension of those feature maps on the Pile subsample.
+    - Example usage: `python3 scripts/rff_ablation/rff_ablation.py id --subject UTS02`
+    - Writes `id_gride_rff_pile_seed32_n10000_UTS02.json`.
+3. Run the `plot` stage to plot encoding performance and intrinsic dimension against RFF dimensionality, averaged over subjects.
+    - Example usage: `python3 scripts/rff_ablation/rff_ablation.py plot --subjects UTS02 UTS03`
+
+Steps 1 and 2 are run once per subject; the paper uses UTS02 and UTS03.
 
 ## Step 6: Braintuning on WavLM
 (Aditya)
