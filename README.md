@@ -39,7 +39,9 @@ To compute the layerwise intrinsic dimension on the last-token representation, u
 For further reference on how to compute ID using GRIDE, see `https://github.com/chengemily1/id-llm-abstraction`.
 
 ## Step 3: Probing
-(TODO Emily)
+Probing uses tasks from Conneau et al., (2018). 
+
+For further reference on probing with nonlinear MLPs, see `https://github.com/chengemily1/id-llm-abstraction`.
 
 ## Step 4: Encoding models
 (TODO Emily+RJ)
