@@ -151,7 +151,7 @@ if __name__ == '__main__':
     
     print('Model and tokenizer loaded on ', model.device)
     # Load and preprocess data
-    df = pd.read_csv(f"YOUR_PATH/encoding-models/conneau/{task}.txt", sep="\t", header=None, names=['subset', 'label', 'sentence'])
+    df = pd.read_csv(f"YOUR_PATH/data/conneau/{task}.txt", sep="\t", header=None, names=['subset', 'label', 'sentence'])
     
     unique_labels = list(df.label.unique())
     df['label'] = df['label'].map(lambda x: unique_labels.index(x))
