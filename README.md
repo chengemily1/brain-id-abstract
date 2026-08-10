@@ -42,8 +42,9 @@ Probing uses tasks from Conneau et al., (2018) as well as from Vattikonda et al.
 Data for the LLM probing tasks is in `data/conneau` as `.txt` files. Run `scripts/probing/probing.py`. This trains a linear probe on each layer.
 
 ## Step 4: Encoding models
-The encoding models reuse the setup from the encoding model scaling laws repo, `https://github.com/HuthLab/encoding-model-scaling-laws`:
+The fMRI encoding models reuse the setup from the encoding model scaling laws repo, `https://github.com/HuthLab/encoding-model-scaling-laws`:
 - Put its `ridge_utils/` on your `PYTHONPATH`.
+- Move `scripts/encoding_models/manifold_utils` to `PYTHONPATH`.
 - Download `grids_huge.jbl`, `trfiles_huge.jbl`, and the per-subject `UTS0*_responses.jbl` fMRI responses from the Box folder linked in its README, https://utexas.box.com/v/EncodingModelScalingLaws. These response files are already trimmed by 10 TRs at the start and 5 at the end, and the stimulus is sliced to match.
 
 To train an encoding model requires running `scripts/encoding_models/main.py` using the default arguments, but changing the model name.
