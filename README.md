@@ -1,7 +1,5 @@
 # Abstraction Induces the Brain Alignment of Language and Speech Models
 
-** Under construction 7/25/2026**
-
 This repo contains code for the ICML 2026 paper "Abstraction Induces the Brain Alignment of Language and Speech Models" by Emily Cheng, Aditya Vaidya, and Richard Antonello. 
 
 Please use this citation if you repurpose any code:
