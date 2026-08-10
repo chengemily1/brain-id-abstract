@@ -6,7 +6,7 @@ import sys
 
 model_name = sys.argv[1]
 batch_size = int(sys.argv[2])
-data_file = sys.argv[3]
+data_file = sys.argv[3] # should be data/pile_subsample.txt
 out_pickle_prefix = sys.argv[4]
 checkpoint = sys.argv[5]
 
@@ -86,7 +86,7 @@ while ((first_index+current_batch_size)<cases_count):
             states[i] = []
         states[i] = states[i] + curr_output[i]
     first_index=first_index+current_batch_size
-    
+
 # in case cases_count is not a multiple of batch_size
 if first_index<cases_count:
     curr_output = model_pass(inputs[first_index:cases_count])
