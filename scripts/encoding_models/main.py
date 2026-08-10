@@ -35,8 +35,8 @@ from manifold_utils.feature_extraction import FeatureExtractor
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--model", type=str, default="facebook/opt-125m")
-    parser.add_argument("--y_projection", type=str, default="pca", choices=['pca', 'dm', 'I']) # I is identity projection
-    parser.add_argument('--which_layers', type=str, default='single', help='feature selection algo', choices=['single', 'all', 'ipca', 'every_other', 'idCorr'])
+    parser.add_argument("--y_projection", type=str, default="I") # I is identity projection
+    parser.add_argument('--which_layers', type=str, default='single', help='feature selection algo')
     parser.add_argument('--target_x_dim', type=int, default=1000)
     parser.add_argument("--n_layers", type=int, default=1, help="How many layers we want to include from the model")
     parser.add_argument("--seed_layer", type=int, default=9, help="the first layer to include (only layer is n_layers=1)")
@@ -48,9 +48,6 @@ def parse_args():
     parser.add_argument("--autoencoder_lr", type=float, default=1e-3)
 
     args = parser.parse_args()
-
-    if args.which_layers == 'all' or args.which_layers == 'every_other':
-        args.n_layers = 0
 
     return args
 
