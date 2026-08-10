@@ -151,7 +151,7 @@ if __name__ == '__main__':
     
     print('Model and tokenizer loaded on ', model.device)
     # Load and preprocess data
-    df = pd.read_csv(f"/home/echeng/encoding-models/conneau/{task}.txt", sep="\t", header=None, names=['subset', 'label', 'sentence'])
+    df = pd.read_csv(f"YOUR_PATH/encoding-models/conneau/{task}.txt", sep="\t", header=None, names=['subset', 'label', 'sentence'])
     
     unique_labels = list(df.label.unique())
     df['label'] = df['label'].map(lambda x: unique_labels.index(x))
@@ -263,5 +263,5 @@ if __name__ == '__main__':
         # Save
         test_accs.append(test_acc)
     model_str = model_name.split('/')[-1]
-    with open(f'/home/echeng/encoding-models/results/{model_str}/ckpt_{checkpoint}_{task}.pkl', 'wb') as f:
+    with open(f'YOUR_PATH/encoding-models/results/{model_str}/ckpt_{checkpoint}_{task}.pkl', 'wb') as f:
         pickle.dump(test_accs, f)
