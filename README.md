@@ -39,21 +39,24 @@ To compute the layerwise intrinsic dimension on the last-token representation, u
 For further reference on how to compute ID using GRIDE, see `https://github.com/chengemily1/id-llm-abstraction`.
 
 ## Step 3: Probing
-Probing uses tasks from Conneau et al., (2018). 
-
+Probing uses tasks from Conneau et al., (2018) as well as from Vattikonda et al., (2026).
 For further reference on probing with nonlinear MLPs, see `https://github.com/chengemily1/id-llm-abstraction`.
 
 ## Step 4: Encoding models
-(TODO Emily+RJ)
+The encoding models reuse the setup from the encoding model scaling laws repo, `https://github.com/HuthLab/encoding-model-scaling-laws`:
+- Put its `ridge_utils/` on your `PYTHONPATH`.
+- Download `grids_huge.jbl`, `trfiles_huge.jbl`, and the per-subject `UTS0*_responses.jbl` fMRI responses from the Box folder linked in its README, https://utexas.box.com/v/EncodingModelScalingLaws. These response files are already trimmed by 10 TRs at the start and 5 at the end, and the stimulus is sliced to match.
+
+- To train an encoding model requires the following steps:
+1. Feed the dataset through the LLM or speech-audio model.
+
 
 ## Step 5: Random Fourier Features ablation
 This is a control analysis. Instead of an LLM, each word is mapped to a fixed random vector and pushed through a Gaussian random Fourier feature map. Sweeping the RFF output dimensionality varies the intrinsic dimension of the feature space without introducing any semantic abstraction, which lets us ask whether encoding performance tracks ID on its own.
 
 All three stages live in `scripts/rff_ablation/rff_ablation.py`, which needs `pip install random-fourier-features-pytorch dadapy`.
 
-The encoding models reuse the setup from the encoding model scaling laws repo, `https://github.com/HuthLab/encoding-model-scaling-laws`:
-- Put its `ridge_utils/` on your `PYTHONPATH`.
-- Download `grids_huge.jbl`, `trfiles_huge.jbl`, and the per-subject `UTS0*_responses.jbl` fMRI responses from the Box folder linked in its README, https://utexas.box.com/v/EncodingModelScalingLaws. These response files are already trimmed by 10 TRs at the start and 5 at the end, and the stimulus is sliced to match.
+Encoding models repurpose the data from Step 4.
 
 1. Run the `sweep` stage to fit voxelwise ridge encoding models across a sweep of RFF dimensionalities. It also saves the feature maps, so the next step measures the ID of exactly the maps that were fit.
     - Example usage: `python3 scripts/rff_ablation/rff_ablation.py sweep --subject UTS02`
