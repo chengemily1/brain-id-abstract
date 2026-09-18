@@ -1,0 +1,18 @@
+# Dependencies for scripts/encoding_models/main.py and scripts/main.py
+# (the fMRI encoding model pipeline). Install with:
+#   uv pip install -r requirements.txt
+# For CPU-only torch, install torch separately first from
+# https://download.pytorch.org/whl/cpu instead of relying on this file.
+numpy<2  # dadapy's compiled extension is not NumPy 2.x ABI-compatible
+scipy
+scikit-learn
+torch
+transformers
+accelerate  # required for device_map='auto' in manifold_utils.feature_extraction
+joblib
+tqdm
+matplotlib
+cvxopt
+pydiffmap
+dadapy
+tables
