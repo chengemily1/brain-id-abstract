@@ -1,6 +1,6 @@
 This patch enables LoRA support for WavLM. This has been tested with Transformers 4.33.2 and PEFT 0.5.0.
---- a/transformers/models/wavlm/modeling_wavlm.py      2023-12-22 02:58:38.177408303 -0600
-+++ b/transformers/models/wavlm/modeling_wavlm.py     2024-01-22 16:50:15.181299241 -0600
+--- a/transformers/models/wavlm/modeling_wavlm.py
++++ b/transformers/models/wavlm/modeling_wavlm.py
 @@ -39,6 +39,7 @@
  from ...utils import add_code_sample_docstrings, add_start_docstrings, add_start_docstrings_to_model_forward, logging
  from .configuration_wavlm import WavLMConfig

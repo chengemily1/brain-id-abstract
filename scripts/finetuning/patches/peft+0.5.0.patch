@@ -1,5 +1,5 @@
---- a/peft/peft_model.py	2024-11-01 18:48:47.830090826 -0500
-+++ b/peft/peft_model.py	2023-11-06 15:32:56.487227680 -0600
+--- a/peft/peft_model.py
++++ b/peft/peft_model.py
 @@ -717,7 +717,7 @@
  
      def forward(
