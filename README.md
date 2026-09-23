@@ -69,7 +69,16 @@ Encoding models repurpose the data from Step 4.
 Steps 1 and 2 are run once per subject; the paper uses UTS02 and UTS03.
 
 ## Step 6: Braintuning on WavLM
-(Aditya)
+Fine-tunes a WavLM encoder against fMRI responses with LoRA (braintuning), then fits linear encoding models on the resulting features. Lives in `scripts/finetuning/`; see its own `README.md` for setup (pinned `transformers`/`peft` versions and patches). `DATA` below should point to wherever `UTS0X_responses.jbl` and `trfiles_huge.jbl` (see Step 4) live, and `PYTHONPATH=../encoding_models` is needed to unpickle the latter. Run everything below from `scripts/finetuning/`.
 
-
+1. `brain_finetune.py` -- fine-tune WavLM against a subject's fMRI responses. (The example below is a quick test on a single training story via `--story_config`; drop that flag to train on all available stories.)
+    - Example usage: `DATA=../.. PYTHONPATH=../encoding_models WANDB_MODE=offline python3 brain_finetune.py --subject 3 --num_epochs 3 --story_config test_story_config.json`
+2. `brain_finetune_dump_features.py` -- dump features from a fine-tuned checkpoint, for each epoch.
+    - Example usage: `for e in $(seq 0 3); do DATA=../.. PYTHONPATH=../encoding_models python3 brain_finetune_dump_features.py --save_path SCRATCH/3/all --epoch $e --batchsz 64 --stories adollshouse wheretheressmoke fromboyhoodtofatherhood onapproachtopluto; done`
+3. `brain_refit_linear.py` -- fit a ridge encoding model on those features, for each epoch. (Epoch 0 runs full cross-validation; later epochs can reuse its alphas with `--reuse_valphas`.)
+    - Example usage: `for e in $(seq 0 3); do DATA=../.. PYTHONPATH=../encoding_models python3 brain_refit_linear.py --save_path SCRATCH/3/all --epoch $e --no_extract_features --reuse_valphas; done`
+4. `brain_best_linear.py` -- pick the best epoch by validation performance and refit on it.
+    - Example usage: `DATA=../.. PYTHONPATH=../encoding_models python3 brain_best_linear.py --save_path SCRATCH/3/all --no_extract_features`
+5. `brain_best_linear_print.py` -- print pretrained vs. finetuned encoding performance.
+    - Example usage: `DATA=../.. PYTHONPATH=../encoding_models python3 brain_best_linear_print.py --save_path SCRATCH/3/all`
 

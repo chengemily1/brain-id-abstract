@@ -1,0 +1,28 @@
+This patch fixes pretrained positional conv embedding weights (pos_conv_embed)
+silently failing to load under torch versions that provide
+nn.utils.parametrizations.weight_norm (torch>=2.1). transformers==4.33.2 has a
+forward-compat hasattr() check that opts into the newer parametrizations-based
+weight_norm when available, but this transformers version has no matching
+state-dict key-renaming logic, so the checkpoint's flat weight_g/weight_v keys
+go unused and the module's parametrizations.weight.original0/1 params are
+randomly reinitialized instead. Forcing the legacy nn.utils.weight_norm keeps
+the module's parameter names matching the checkpoint's, restoring correct
+pretrained-weight loading. Verified against transformers==4.33.2 + torch==2.5.1.
+Apply this after patches/transformers+4.33.2.patch.
+--- a/transformers/models/wavlm/modeling_wavlm.py
++++ b/transformers/models/wavlm/modeling_wavlm.py
+@@ -280,9 +280,12 @@
+             groups=config.num_conv_pos_embedding_groups,
+         )
+ 
++        # Force legacy weight_norm (not nn.utils.parametrizations.weight_norm) so the
++        # constructed module's parameter names (weight_g/weight_v) match the pretrained
++        # checkpoint's flat key names; this transformers version has no key-renaming
++        # logic for the newer parametrizations-based naming, so using it here would
++        # silently fail to load the pretrained positional conv embedding weights.
+         weight_norm = nn.utils.weight_norm
+-        if hasattr(nn.utils.parametrizations, "weight_norm"):
+-            weight_norm = nn.utils.parametrizations.weight_norm
+ 
+         if is_deepspeed_zero3_enabled():
+             import deepspeed

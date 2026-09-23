@@ -1,0 +1,57 @@
+{
+    "wavlm-base": {
+        "huggingface_hub": "microsoft/wavlm-base",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "wavlm-base-plus": {
+        "huggingface_hub": "microsoft/wavlm-base-plus",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "wavlm-large": {
+        "huggingface_hub": "microsoft/wavlm-large",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "whisper-tiny": {
+        "huggingface_hub": "openai/whisper-tiny",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "whisper-base": {
+        "huggingface_hub": "openai/whisper-base",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "whisper-small": {
+        "huggingface_hub": "openai/whisper-small",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "whisper-medium": {
+        "huggingface_hub": "openai/whisper-medium",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "whisper-large": {
+        "huggingface_hub": "openai/whisper-large",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "whisper-large-v2": {
+        "huggingface_hub": "openai/whisper-large-v2",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "whisper-large-v3": {
+        "huggingface_hub": "openai/whisper-large-v3",
+        "stride": 320,
+        "min_input_length": 400
+    },
+    "encodec_24khz": {
+        "huggingface_hub": "facebook/encodec_24khz",
+        "stride": 320,
+        "min_input_length": 1
+    }
+}

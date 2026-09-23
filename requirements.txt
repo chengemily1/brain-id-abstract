@@ -16,3 +16,9 @@ cvxopt
 pydiffmap
 dadapy
 tables
+
+# Additional dependencies for scripts/finetuning/ (braintuning on WavLM)
+peft
+torchaudio
+wandb
+xarray  # used by brain_best_linear_print.py

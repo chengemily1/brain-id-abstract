@@ -1,0 +1,28 @@
+This patch enables LoRA support for WavLM. This has been tested with Transformers 4.33.2 and PEFT 0.5.0.
+--- a/transformers/models/wavlm/modeling_wavlm.py      2023-12-22 02:58:38.177408303 -0600
++++ b/transformers/models/wavlm/modeling_wavlm.py     2024-01-22 16:50:15.181299241 -0600
+@@ -39,6 +39,7 @@
+ from ...utils import add_code_sample_docstrings, add_start_docstrings, add_start_docstrings_to_model_forward, logging
+ from .configuration_wavlm import WavLMConfig
+ 
++import peft # for testing peft.tuners.lora.Linear
+ 
+ logger = logging.get_logger(__name__)
+ 
+@@ -515,9 +517,12 @@
+             output_attentions,
+             gated_position_bias,
+             use_separate_proj_weight=True,
+-            q_proj_weight=self.q_proj.weight,
+-            k_proj_weight=self.k_proj.weight,
+-            v_proj_weight=self.v_proj.weight,
++            # q_proj_weight=self.q_proj.weight,
++            # k_proj_weight=self.k_proj.weight,
++            # v_proj_weight=self.v_proj.weight,
++            q_proj_weight = (self.q_proj.weight + self.q_proj.get_delta_weight(self.q_proj.active_adapter)) if isinstance(self.q_proj, peft.tuners.lora.Linear) else self.q_proj.weight,
++            k_proj_weight = (self.k_proj.weight + self.k_proj.get_delta_weight(self.k_proj.active_adapter)) if isinstance(self.k_proj, peft.tuners.lora.Linear) else self.k_proj.weight,
++            v_proj_weight = (self.v_proj.weight + self.v_proj.get_delta_weight(self.v_proj.active_adapter)) if isinstance(self.v_proj, peft.tuners.lora.Linear) else self.v_proj.weight,
+         )
+ 
+         # [Seq_Len, Batch Size, ...] -> [Batch Size, Seq_Len, ...]
+
